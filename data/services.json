@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "name": "CLASSIC CUT",
+    "description": "Traditional haircut with scissors and clippers",
+    "price": 25,
+    "icon": "scissors"
+  },
+  {
+    "id": 2,
+    "name": "BEARD TRIM",
+    "description": "Professional beard styling and trimming",
+    "price": 15,
+    "icon": "beard"
+  },
+  {
+    "id": 3,
+    "name": "RAZOR SHAVE",
+    "description": "Hot towel and straight razor traditional shave",
+    "price": 30,
+    "icon": "razor"
+  },
+  {
+    "id": 4,
+    "name": "HAIR + BEARD",
+    "description": "Complete hair and beard styling package",
+    "price": 35,
+    "icon": "combo"
+  }
+]

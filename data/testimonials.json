@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "MARK T.",
+    "rating": 5,
+    "comment": "Best barber in town! Always leave looking and feeling great.",
+    "approved": true,
+    "createdAt": "2025-04-28T08:42:11.311Z"
+  },
+  {
+    "id": 2,
+    "name": "JAMES L.",
+    "rating": 5,
+    "comment": "Been coming here for years. Consistent quality and great conversation!",
+    "approved": true,
+    "createdAt": "2025-04-28T08:42:11.311Z"
+  },
+  {
+    "id": 3,
+    "name": "ROBERT K.",
+    "rating": 4,
+    "comment": "Love the atmosphere and always get exactly what I ask for.",
+    "approved": true,
+    "createdAt": "2025-04-28T08:42:11.311Z"
+  }
+]
