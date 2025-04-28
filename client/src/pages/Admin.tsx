@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Trash2, CheckSquare, Home, Mail } from "lucide-react";
+import { Trash2, CheckSquare, Home, Mail, AlertTriangle } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import PixelBorder from "@/components/PixelBorder";
@@ -12,6 +12,16 @@ import AdminLogin from "@/components/AdminLogin";
 import type { Appointment, ContactMessage } from "@shared/schema";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 export default function Admin() {
   // Set up all hooks at the top level
@@ -20,6 +30,32 @@ export default function Admin() {
   const today = new Date().toISOString().split('T')[0];
   const { toast } = useToast();
   const [_, navigate] = useLocation();
+  
+  // Confirmation dialog state
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [deleteItemType, setDeleteItemType] = useState<'appointment' | 'message'>('appointment');
+  const [deleteItemId, setDeleteItemId] = useState<number | null>(null);
+  
+  // Handle opening the delete confirmation dialog
+  const openDeleteDialog = (type: 'appointment' | 'message', id: number) => {
+    setDeleteItemType(type);
+    setDeleteItemId(id);
+    setIsDeleteDialogOpen(true);
+  };
+  
+  // Handle confirming deletion
+  const handleConfirmDelete = () => {
+    if (deleteItemId === null) return;
+    
+    if (deleteItemType === 'appointment') {
+      deleteAppointmentMutation.mutate(deleteItemId);
+    } else {
+      deleteContactMessageMutation.mutate(deleteItemId);
+    }
+    
+    setIsDeleteDialogOpen(false);
+    setDeleteItemId(null);
+  };
   
   // Data fetching hook - this will run regardless of authentication state
   // but will only be used when authenticated
@@ -224,7 +260,6 @@ export default function Admin() {
                       <TableHead>Date</TableHead>
                       <TableHead>Name</TableHead>
                       <TableHead>Email</TableHead>
-                      <TableHead>Phone</TableHead>
                       <TableHead>Message</TableHead>
                       <TableHead>Actions</TableHead>
                     </TableRow>
@@ -237,7 +272,6 @@ export default function Admin() {
                         </TableCell>
                         <TableCell>{message.name}</TableCell>
                         <TableCell>{message.email}</TableCell>
-                        <TableCell>{message.phone}</TableCell>
                         <TableCell className="max-w-[300px]">
                           <div className="line-clamp-3">{message.message}</div>
                         </TableCell>
@@ -245,11 +279,7 @@ export default function Admin() {
                           <Button
                             variant="outline"
                             size="sm"
-                            onClick={() => {
-                              if (confirm('Are you sure you want to delete this message?')) {
-                                deleteContactMessageMutation.mutate(message.id);
-                              }
-                            }}
+                            onClick={() => openDeleteDialog('message', message.id)}
                             disabled={deleteContactMessageMutation.isPending}
                             className="text-red-600 hover:text-red-700 hover:bg-red-50"
                           >
@@ -328,11 +358,7 @@ export default function Admin() {
                             <Button
                               variant="outline"
                               size="sm"
-                              onClick={() => {
-                                if (confirm('Are you sure you want to delete this appointment?')) {
-                                  deleteAppointmentMutation.mutate(appointment.id);
-                                }
-                              }}
+                              onClick={() => openDeleteDialog('appointment', appointment.id)}
                               disabled={deleteAppointmentMutation.isPending}
                               className="text-red-600 hover:text-red-700 hover:bg-red-50"
                             >
@@ -350,6 +376,30 @@ export default function Admin() {
           )}
         </div>
       </PixelBorder>
+      
+      {/* Confirmation Dialog */}
+      <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+        <AlertDialogContent className="border border-border">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2">
+              <AlertTriangle className="h-5 w-5 text-destructive" />
+              Confirm Deletion
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete this {deleteItemType}? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction 
+              onClick={handleConfirmDelete}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
