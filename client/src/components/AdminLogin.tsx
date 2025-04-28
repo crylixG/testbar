@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useLocation } from "wouter";
+import { Home } from "lucide-react";
 import PixelBorder from "./PixelBorder";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -23,6 +25,7 @@ interface AdminLoginProps {
 export default function AdminLogin({ onLogin }: AdminLoginProps) {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const [_, navigate] = useLocation();
 
   // Initialize form
   const form = useForm<LoginFormValues>({
@@ -105,6 +108,18 @@ export default function AdminLogin({ onLogin }: AdminLoginProps) {
               >
                 {isLoading ? "Authenticating..." : "Login"}
               </Button>
+              
+              <div className="mt-4 text-center">
+                <Button
+                  type="button"
+                  variant="ghost"
+                  className="flex mx-auto items-center gap-2"
+                  onClick={() => navigate('/')}
+                >
+                  <Home className="h-4 w-4" />
+                  Go Back to Main Page
+                </Button>
+              </div>
             </form>
           </Form>
         </div>

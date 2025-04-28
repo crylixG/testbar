@@ -4,8 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Trash2, CheckSquare } from "lucide-react";
+import { Trash2, CheckSquare, Home } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useLocation } from "wouter";
 import PixelBorder from "@/components/PixelBorder";
 import AdminLogin from "@/components/AdminLogin";
 import type { Appointment } from "@shared/schema";
@@ -18,6 +19,7 @@ export default function Admin() {
   const [activeTab, setActiveTab] = useState<'upcoming' | 'past'>('upcoming');
   const today = new Date().toISOString().split('T')[0];
   const { toast } = useToast();
+  const [_, navigate] = useLocation();
   
   // Data fetching hook - this will run regardless of authentication state
   // but will only be used when authenticated
@@ -151,6 +153,17 @@ export default function Admin() {
               onClick={() => setActiveTab('past')}
             >
               Past Appointments
+            </Button>
+          </div>
+          
+          <div className="flex justify-center mb-6">
+            <Button
+              variant="secondary"
+              className="flex items-center gap-2"
+              onClick={() => navigate('/')}
+            >
+              <Home className="h-4 w-4" />
+              Go Back to Main Page
             </Button>
           </div>
           
