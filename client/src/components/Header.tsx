@@ -87,6 +87,12 @@ export default function Header() {
           <a href="#gallery" className="px-3 py-2 hover:bg-muted transition-colors duration-200 text-sm">GALLERY</a>
           <a href="#reviews" className="px-3 py-2 hover:bg-muted transition-colors duration-200 text-sm">REVIEWS</a>
           <a href="#contact" className="px-3 py-2 hover:bg-muted transition-colors duration-200 text-sm">CONTACT</a>
+          <Link 
+            href="/admin" 
+            className="px-3 py-2 hover:bg-muted transition-colors duration-200 text-sm"
+          >
+            ADMIN
+          </Link>
           <a 
             href="#booking" 
             className="ml-2 sm:ml-4 px-3 py-2 bg-primary hover:bg-opacity-80 transition-colors duration-200 font-pixel text-xs"
@@ -158,6 +164,13 @@ export default function Header() {
           >
             CONTACT
           </a>
+          <Link 
+            href="/admin" 
+            className="px-4 py-3 hover:bg-muted transition-colors duration-200 text-sm border-b border-muted"
+            onClick={handleNavLinkClick}
+          >
+            ADMIN
+          </Link>
           <a 
             href="#booking" 
             className="my-3 px-4 py-3 bg-primary hover:bg-opacity-80 transition-colors duration-200 font-pixel text-xs text-center"

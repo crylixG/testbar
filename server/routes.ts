@@ -61,6 +61,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // Get all appointments (admin route)
+  app.get("/api/admin/appointments", async (_req: Request, res: Response) => {
+    try {
+      const appointments = await storage.getAppointments();
+      res.json(appointments);
+    } catch (error) {
+      console.error("Error fetching all appointments:", error);
+      res.status(500).json({ message: "Failed to fetch appointments" });
+    }
+  });
+  
   // Get testimonials
   app.get("/api/testimonials", async (_req: Request, res: Response) => {
     try {
