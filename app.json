@@ -5,5 +5,14 @@
     {
       "url": "heroku/nodejs"
     }
-  ]
+  ],
+  "env": {
+    "NODE_ENV": {
+      "description": "Environment for the application (production for Heroku)",
+      "value": "production"
+    }
+  },
+  "scripts": {
+    "postdeploy": "node heroku-postbuild.js"
+  }
 }

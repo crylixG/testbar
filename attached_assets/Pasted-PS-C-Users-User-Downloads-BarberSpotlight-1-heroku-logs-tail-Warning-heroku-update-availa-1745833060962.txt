@@ -1,0 +1,48 @@
+PS C:\Users\User\Downloads\BarberSpotlight-1> heroku logs --tail
+ »   Warning: heroku update available from 10.0.0 to 10.6.1.
+2025-04-28T09:28:13.673072+00:00 app[api]: Initial release by user debmalyabiswas011@gmail.com
+2025-04-28T09:28:13.673072+00:00 app[api]: Release v1 created by user debmalyabiswas011@gmail.com
+2025-04-28T09:28:13.878713+00:00 app[api]: Enable Logplex by user debmalyabiswas011@gmail.com
+2025-04-28T09:28:13.878713+00:00 app[api]: Release v2 created by user debmalyabiswas011@gmail.com
+2025-04-28T09:29:22.050598+00:00 app[api]: Release v3 created by user debmalyabiswas011@gmail.com
+2025-04-28T09:29:22.050598+00:00 app[api]: Set NODE_ENV config vars by user debmalyabiswas011@gmail.com
+2025-04-28T09:29:42.000000+00:00 app[api]: Build started by user debmalyabiswas011@gmail.com
+2025-04-28T09:30:18.716695+00:00 app[api]: Deploy 45dabaa4 by user debmalyabiswas011@gmail.com
+2025-04-28T09:30:18.716695+00:00 app[api]: Release v4 created by user debmalyabiswas011@gmail.com
+2025-04-28T09:30:18.733032+00:00 app[api]: Scaled to web@1:Basic by user debmalyabiswas011@gmail.com
+2025-04-28T09:30:22.000000+00:00 app[api]: Build succeeded
+2025-04-28T09:30:24.230853+00:00 heroku[web.1]: Starting process with command `node start.js`
+2025-04-28T09:30:24.773480+00:00 app[web.1]: Starting server in production mode
+2025-04-28T09:30:24.804215+00:00 app[web.1]: Failed to start the server: Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@vitejs/plugin-react' imported from /app/dist/index.js
+2025-04-28T09:30:24.804217+00:00 app[web.1]: at Object.getPackageJSONURL (node:internal/modules/package_json_reader:268:9)
+2025-04-28T09:30:24.804241+00:00 app[web.1]: at packageResolve (node:internal/modules/esm/resolve:768:81)
+2025-04-28T09:30:24.804251+00:00 app[web.1]: at moduleResolve (node:internal/modules/esm/resolve:854:18)
+2025-04-28T09:30:24.804253+00:00 app[web.1]: at defaultResolve (node:internal/modules/esm/resolve:984:11)
+2025-04-28T09:30:24.804253+00:00 app[web.1]: at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:780:12)
+2025-04-28T09:30:24.804253+00:00 app[web.1]: at #cachedDefaultResolve (node:internal/modules/esm/loader:704:25)
+2025-04-28T09:30:24.804253+00:00 app[web.1]: at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
+2025-04-28T09:30:24.804255+00:00 app[web.1]: at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
+2025-04-28T09:30:24.804255+00:00 app[web.1]: at ModuleJob._link (node:internal/modules/esm/module_job:137:49) {
+2025-04-28T09:30:24.804257+00:00 app[web.1]: code: 'ERR_MODULE_NOT_FOUND'
+2025-04-28T09:30:24.804259+00:00 app[web.1]: }
+2025-04-28T09:30:24.841079+00:00 heroku[web.1]: Process exited with status 1
+2025-04-28T09:30:24.865865+00:00 heroku[web.1]: State changed from starting to crashed
+2025-04-28T09:30:24.915274+00:00 heroku[web.1]: State changed from crashed to starting
+2025-04-28T09:30:30.235372+00:00 heroku[web.1]: Starting process with command `node start.js`
+2025-04-28T09:30:30.910817+00:00 app[web.1]: Starting server in production mode
+2025-04-28T09:30:30.941073+00:00 app[web.1]: Failed to start the server: Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@vitejs/plugin-react' imported from /app/dist/index.js
+2025-04-28T09:30:30.941076+00:00 app[web.1]: at Object.getPackageJSONURL (node:internal/modules/package_json_reader:268:9)
+2025-04-28T09:30:30.941078+00:00 app[web.1]: at packageResolve (node:internal/modules/esm/resolve:768:81)
+2025-04-28T09:30:30.941082+00:00 app[web.1]: at moduleResolve (node:internal/modules/esm/resolve:854:18)
+2025-04-28T09:30:30.941082+00:00 app[web.1]: at defaultResolve (node:internal/modules/esm/resolve:984:11)
+2025-04-28T09:30:30.941083+00:00 app[web.1]: at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:780:12)
+2025-04-28T09:30:30.941083+00:00 app[web.1]: at #cachedDefaultResolve (node:internal/modules/esm/loader:704:25)
+2025-04-28T09:30:30.941083+00:00 app[web.1]: at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
+2025-04-28T09:30:30.941083+00:00 app[web.1]: at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
+2025-04-28T09:30:30.941084+00:00 app[web.1]: at ModuleJob._link (node:internal/modules/esm/module_job:137:49) {
+2025-04-28T09:30:30.941086+00:00 app[web.1]: code: 'ERR_MODULE_NOT_FOUND'
+2025-04-28T09:30:30.941089+00:00 app[web.1]: }
+2025-04-28T09:30:30.988593+00:00 heroku[web.1]: Process exited with status 1
+2025-04-28T09:30:31.007899+00:00 heroku[web.1]: State changed from starting to crashed
+2025-04-28T09:30:49.287050+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=testbar-c4b3de20043e.herokuapp.com request_id=26a6c6ed-6c6e-4c02-b859-c80b64bd6828 fwd="152.56.136.196" dyno= connect= service= status=503 bytes= protocol=https
+2025-04-28T09:30:49.990765+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/favicon.ico" host=testbar-c4b3de20043e.herokuapp.com request_id=1f564c94-261a-4458-9d74-b336687d06f0 fwd="152.56.136.196" dyno= connect= service= status=503 bytes= protocol=https

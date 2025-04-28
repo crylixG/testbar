@@ -46,7 +46,16 @@ Replace `your-barber-shop-name` with the name you chose in step 2.
 heroku config:set NODE_ENV=production
 ```
 
-6. **Push your code to Heroku**
+6. **Make sure to include all the necessary files**
+
+Make sure you've included the following files before pushing to Heroku:
+- `server.js`
+- `Procfile` - should contain exactly: `web: node server.js`
+- `app.json`
+- `heroku-postbuild.js`
+- `.node-version`
+
+7. **Push your code to Heroku**
 
 ```bash
 git push heroku main
@@ -58,42 +67,51 @@ If your branch is named `master` instead of `main`, use:
 git push heroku master
 ```
 
-7. **Ensure that at least one web dyno is running**
+8. **Ensure that at least one web dyno is running**
 
 ```bash
 heroku ps:scale web=1
 ```
 
-8. **Open your deployed application**
+9. **Open your deployed application**
 
 ```bash
 heroku open
 ```
 
-## Common Deployment Issues
+## Fixing Common Deployment Issues
 
-If you encounter an "Application Error" when visiting your Heroku site, try these steps:
+If you're seeing an error about missing dependencies like `@vitejs/plugin-react`, follow these steps:
 
-1. **Check the logs for errors**:
+1. **Install all dependencies as regular dependencies**:
+
 ```bash
-heroku logs --tail
+heroku config:set NPM_CONFIG_PRODUCTION=false
 ```
 
-2. **Make sure the build completed successfully**:
-```bash
-heroku builds:last
-```
+This will ensure Heroku installs both regular and development dependencies.
 
-3. **Try restarting the dyno**:
+2. **If the error persists, run a manual rebuild**:
+
 ```bash
 heroku restart
 ```
 
-4. **Verify your Procfile is correctly formatted**:
-The Procfile should contain exactly: `web: npm start` (with no extra spaces)
+3. **Review the logs for specific errors**:
 
-5. **Check that the Node.js version is compatible**:
-Heroku currently supports Node.js 20.x by default
+```bash
+heroku logs --tail
+```
+
+## Understanding This Repository's Deployment Strategy
+
+This application uses a special deployment strategy for Heroku:
+
+1. We've created a simplified `server.js` file that doesn't depend on Vite or React for runtime operation. This file is specifically designed to run in Heroku's production environment.
+
+2. The `Procfile` has been configured to use this simplified server instead of the development server.
+
+3. The `heroku-postbuild.js` script helps configure the application for Heroku's environment during the build process.
 
 ## Important Notes
 
