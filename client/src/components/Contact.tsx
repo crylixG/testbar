@@ -67,54 +67,54 @@ export default function Contact() {
   };
   
   return (
-    <section id="contact" className="py-16 bg-background">
+    <section id="contact" className="py-12 sm:py-16 bg-background">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
-            <h2 className="font-pixel text-2xl mb-6 text-primary">FIND US</h2>
+            <h2 className="font-pixel text-xl sm:text-2xl mb-4 md:mb-6 text-primary">FIND US</h2>
             
-            <PixelBorder className="mb-6 overflow-hidden">
+            <PixelBorder className="mb-4 sm:mb-6 overflow-hidden">
               <PixelImage 
                 src="https://images.unsplash.com/photo-1516175663209-ac2459a5652f?ixlib=rb-4.0.3"
                 alt="8-Bit Barbers location"
-                className="w-full h-64 object-cover"
+                className="w-full h-48 sm:h-64 object-cover"
               />
             </PixelBorder>
             
-            <div className="mb-6">
-              <div className="font-pixel text-sm text-secondary mb-2">ADDRESS</div>
-              <p>123 Pixel Street, Downtown<br/>New York, NY 10001</p>
+            <div className="mb-4 sm:mb-6">
+              <div className="font-pixel text-xs sm:text-sm text-secondary mb-1 sm:mb-2">ADDRESS</div>
+              <p className="text-sm sm:text-base">123 Pixel Street, Downtown<br/>New York, NY 10001</p>
             </div>
             
-            <div className="mb-6">
-              <div className="font-pixel text-sm text-secondary mb-2">CONTACT</div>
-              <p>Phone: (555) 123-4567<br/>Email: info@8bitbarbers.com</p>
+            <div className="mb-4 sm:mb-6">
+              <div className="font-pixel text-xs sm:text-sm text-secondary mb-1 sm:mb-2">CONTACT</div>
+              <p className="text-sm sm:text-base">Phone: (555) 123-4567<br/>Email: info@8bitbarbers.com</p>
             </div>
             
-            <div className="mb-6">
-              <div className="font-pixel text-sm text-secondary mb-2">FOLLOW US</div>
-              <div className="flex space-x-4">
-                <a href="#" className="text-primary hover:text-secondary transition-colors duration-200 text-2xl">
-                  <Instagram size={24} />
+            <div className="mb-4 sm:mb-6">
+              <div className="font-pixel text-xs sm:text-sm text-secondary mb-1 sm:mb-2">FOLLOW US</div>
+              <div className="flex space-x-3 sm:space-x-4">
+                <a href="#" className="text-primary hover:text-secondary transition-colors duration-200 text-xl sm:text-2xl">
+                  <Instagram size={20} className="sm:w-6 sm:h-6" />
                 </a>
-                <a href="#" className="text-primary hover:text-secondary transition-colors duration-200 text-2xl">
-                  <Facebook size={24} />
+                <a href="#" className="text-primary hover:text-secondary transition-colors duration-200 text-xl sm:text-2xl">
+                  <Facebook size={20} className="sm:w-6 sm:h-6" />
                 </a>
-                <a href="#" className="text-primary hover:text-secondary transition-colors duration-200 text-2xl">
-                  <Twitter size={24} />
+                <a href="#" className="text-primary hover:text-secondary transition-colors duration-200 text-xl sm:text-2xl">
+                  <Twitter size={20} className="sm:w-6 sm:h-6" />
                 </a>
-                <a href="#" className="text-primary hover:text-secondary transition-colors duration-200 text-2xl">
-                  <SiTiktok size={24} />
+                <a href="#" className="text-primary hover:text-secondary transition-colors duration-200 text-xl sm:text-2xl">
+                  <SiTiktok size={20} className="sm:w-6 sm:h-6" />
                 </a>
               </div>
             </div>
           </div>
           
           <div>
-            <h2 className="font-pixel text-2xl mb-6 text-primary">MESSAGE US</h2>
+            <h2 className="font-pixel text-xl sm:text-2xl mb-4 md:mb-6 text-primary">MESSAGE US</h2>
             
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3 sm:space-y-4">
                 <FormField
                   control={form.control}
                   name="name"
@@ -124,10 +124,10 @@ export default function Contact() {
                       <FormControl>
                         <Input 
                           {...field} 
-                          className="w-full bg-muted border-2 border-primary p-3 focus:outline-none focus:border-secondary transition-colors duration-200"
+                          className="w-full bg-muted border-2 border-primary p-2 sm:p-3 focus:outline-none focus:border-secondary transition-colors duration-200 text-sm"
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-xs" />
                     </FormItem>
                   )}
                 />
@@ -142,10 +142,10 @@ export default function Contact() {
                         <Input 
                           {...field} 
                           type="email"
-                          className="w-full bg-muted border-2 border-primary p-3 focus:outline-none focus:border-secondary transition-colors duration-200"
+                          className="w-full bg-muted border-2 border-primary p-2 sm:p-3 focus:outline-none focus:border-secondary transition-colors duration-200 text-sm"
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-xs" />
                     </FormItem>
                   )}
                 />
@@ -159,10 +159,10 @@ export default function Contact() {
                       <FormControl>
                         <Textarea 
                           {...field}
-                          className="w-full bg-muted border-2 border-primary p-3 h-40 resize-none focus:outline-none focus:border-secondary transition-colors duration-200"
+                          className="w-full bg-muted border-2 border-primary p-2 sm:p-3 h-32 sm:h-40 resize-none focus:outline-none focus:border-secondary transition-colors duration-200 text-sm"
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-xs" />
                     </FormItem>
                   )}
                 />
@@ -170,7 +170,7 @@ export default function Contact() {
                 <div>
                   <Button 
                     type="submit" 
-                    className="bg-primary hover:bg-opacity-80 transition-colors duration-200 px-6 py-3 font-pixel text-sm"
+                    className="bg-primary hover:bg-opacity-80 transition-colors duration-200 px-4 sm:px-6 py-2 sm:py-3 font-pixel text-xs sm:text-sm"
                     disabled={createContactMessage.isPending}
                   >
                     {createContactMessage.isPending ? "SENDING..." : "SEND MESSAGE"}

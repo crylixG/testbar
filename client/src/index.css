@@ -80,6 +80,17 @@
   body {
     @apply font-sans antialiased bg-background text-foreground;
   }
+  
+  /* Improved touch target sizes for mobile */
+  button, a, input, select, .clickable {
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-primary;
+  }
+  
+  @media (max-width: 640px) {
+    button, a, [role="button"], .clickable {
+      @apply min-h-[44px] min-w-[44px];
+    }
+  }
 }
 
 /* Pixel theme specific styles */
@@ -88,12 +99,32 @@
   letter-spacing: -0.05em;
 }
 
+/* Small screens - smaller fonts and spacing */
+@media (max-width: 640px) {
+  .font-pixel {
+    letter-spacing: -0.1em;
+  }
+  
+  .container {
+    @apply px-3;
+  }
+}
+
 /* Pixel Borders */
 .pixel-border {
   position: relative;
   box-shadow: 
     0 0 0 4px hsl(var(--background)),
     0 0 0 6px hsl(var(--primary));
+}
+
+/* Responsive border sizes for small screens */
+@media (max-width: 640px) {
+  .pixel-border {
+    box-shadow: 
+      0 0 0 3px hsl(var(--background)),
+      0 0 0 4px hsl(var(--primary));
+  }
 }
 
 /* Pixel Corners */
@@ -117,6 +148,24 @@
   right: -4px;
 }
 
+@media (max-width: 640px) {
+  .pixel-corner::before, 
+  .pixel-corner::after {
+    width: 3px;
+    height: 3px;
+  }
+  
+  .pixel-corner::before {
+    top: -3px;
+    left: -3px;
+  }
+  
+  .pixel-corner::after {
+    bottom: -3px;
+    right: -3px;
+  }
+}
+
 /* Pixelated Images */
 .pixel-image {
   image-rendering: pixelated;
@@ -136,9 +185,26 @@
   border: 2px solid hsl(var(--background));
 }
 
+@media (max-width: 640px) {
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+}
+
 /* Date Picker Styling */
 input[type="date"]::-webkit-calendar-picker-indicator {
   filter: invert(1);
+}
+
+/* Make form elements more accessible on touch screens */
+@media (max-width: 640px) {
+  input, select, textarea, button {
+    @apply text-base;
+  }
+  
+  select {
+    @apply py-2 px-3;
+  }
 }
 
 /* Animations */
@@ -149,4 +215,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .animate-pixel-slide {
   animation: pixel-slide 0.5s steps(5) infinite;
+}
+
+/* Fix for mobile sticky headers */
+@supports (-webkit-touch-callout: none) {
+  .sticky {
+    position: -webkit-sticky;
+  }
 }

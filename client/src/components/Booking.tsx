@@ -120,17 +120,17 @@ export default function Booking({ services, isLoading }: BookingProps) {
   };
   
   return (
-    <section id="booking" className="py-16 bg-primary text-background">
+    <section id="booking" className="py-12 sm:py-16 bg-primary text-background">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="font-pixel text-2xl md:text-3xl mb-4">BOOK AN APPOINTMENT</h2>
-          <p className="max-w-2xl mx-auto">Reserve your spot online and skip the wait. Choose your preferred date, time, and service.</p>
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="font-pixel text-xl sm:text-2xl md:text-3xl mb-3 sm:mb-4">BOOK AN APPOINTMENT</h2>
+          <p className="max-w-2xl mx-auto text-sm sm:text-base">Reserve your spot online and skip the wait. Choose your preferred date, time, and service.</p>
         </div>
         
-        <div className="max-w-2xl mx-auto bg-background text-foreground p-6 pixel-border">
+        <div className="max-w-2xl mx-auto bg-background text-foreground p-4 sm:p-6 pixel-border">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                 <FormField
                   control={form.control}
                   name="name"
@@ -140,10 +140,10 @@ export default function Booking({ services, isLoading }: BookingProps) {
                       <FormControl>
                         <Input 
                           {...field} 
-                          className="w-full bg-muted border-2 border-primary p-3 focus:outline-none focus:border-secondary transition-colors duration-200"
+                          className="w-full bg-muted border-2 border-primary p-2 sm:p-3 focus:outline-none focus:border-secondary transition-colors duration-200 text-sm"
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-xs" />
                     </FormItem>
                   )}
                 />
@@ -158,10 +158,10 @@ export default function Booking({ services, isLoading }: BookingProps) {
                         <Input 
                           {...field} 
                           type="email"
-                          className="w-full bg-muted border-2 border-primary p-3 focus:outline-none focus:border-secondary transition-colors duration-200"
+                          className="w-full bg-muted border-2 border-primary p-2 sm:p-3 focus:outline-none focus:border-secondary transition-colors duration-200 text-sm"
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-xs" />
                     </FormItem>
                   )}
                 />
@@ -176,10 +176,10 @@ export default function Booking({ services, isLoading }: BookingProps) {
                         <Input 
                           {...field} 
                           type="tel"
-                          className="w-full bg-muted border-2 border-primary p-3 focus:outline-none focus:border-secondary transition-colors duration-200"
+                          className="w-full bg-muted border-2 border-primary p-2 sm:p-3 focus:outline-none focus:border-secondary transition-colors duration-200 text-sm"
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-xs" />
                     </FormItem>
                   )}
                 />
@@ -192,7 +192,7 @@ export default function Booking({ services, isLoading }: BookingProps) {
                       <FormLabel className="font-pixel text-xs">SERVICE</FormLabel>
                       <Select onValueChange={field.onChange} value={field.value}>
                         <FormControl>
-                          <SelectTrigger className="w-full bg-muted border-2 border-primary p-3 focus:outline-none focus:border-secondary transition-colors duration-200">
+                          <SelectTrigger className="w-full bg-muted border-2 border-primary p-2 sm:p-3 focus:outline-none focus:border-secondary transition-colors duration-200 text-sm">
                             <SelectValue placeholder="Select a service" />
                           </SelectTrigger>
                         </FormControl>
@@ -208,7 +208,7 @@ export default function Booking({ services, isLoading }: BookingProps) {
                           )}
                         </SelectContent>
                       </Select>
-                      <FormMessage />
+                      <FormMessage className="text-xs" />
                     </FormItem>
                   )}
                 />
@@ -225,10 +225,10 @@ export default function Booking({ services, isLoading }: BookingProps) {
                           type="date"
                           min={formatDateForInput(new Date())}
                           onChange={handleDateChange}
-                          className="w-full bg-muted border-2 border-primary p-3 focus:outline-none focus:border-secondary transition-colors duration-200"
+                          className="w-full bg-muted border-2 border-primary p-2 sm:p-3 focus:outline-none focus:border-secondary transition-colors duration-200 text-sm"
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-xs" />
                     </FormItem>
                   )}
                 />
@@ -241,7 +241,7 @@ export default function Booking({ services, isLoading }: BookingProps) {
                       <FormLabel className="font-pixel text-xs">TIME</FormLabel>
                       <Select onValueChange={field.onChange} value={field.value}>
                         <FormControl>
-                          <SelectTrigger className="w-full bg-muted border-2 border-primary p-3 focus:outline-none focus:border-secondary transition-colors duration-200">
+                          <SelectTrigger className="w-full bg-muted border-2 border-primary p-2 sm:p-3 focus:outline-none focus:border-secondary transition-colors duration-200 text-sm">
                             <SelectValue placeholder="Select a time" />
                           </SelectTrigger>
                         </FormControl>
@@ -259,7 +259,7 @@ export default function Booking({ services, isLoading }: BookingProps) {
                           )}
                         </SelectContent>
                       </Select>
-                      <FormMessage />
+                      <FormMessage className="text-xs" />
                     </FormItem>
                   )}
                 />
@@ -274,10 +274,10 @@ export default function Booking({ services, isLoading }: BookingProps) {
                     <FormControl>
                       <Textarea 
                         {...field}
-                        className="w-full bg-muted border-2 border-primary p-3 h-32 resize-none focus:outline-none focus:border-secondary transition-colors duration-200"
+                        className="w-full bg-muted border-2 border-primary p-2 sm:p-3 h-24 sm:h-32 resize-none focus:outline-none focus:border-secondary transition-colors duration-200 text-sm"
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-xs" />
                   </FormItem>
                 )}
               />
@@ -285,7 +285,7 @@ export default function Booking({ services, isLoading }: BookingProps) {
               <div className="text-center">
                 <Button 
                   type="submit" 
-                  className="bg-secondary hover:bg-opacity-80 text-background transition-colors duration-200 px-6 py-3 font-pixel text-sm"
+                  className="bg-secondary hover:bg-opacity-80 text-background transition-colors duration-200 px-4 sm:px-6 py-2 sm:py-3 font-pixel text-xs sm:text-sm"
                   disabled={createAppointment.isPending}
                 >
                   {createAppointment.isPending ? "BOOKING..." : "CONFIRM BOOKING"}
