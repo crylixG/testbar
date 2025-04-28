@@ -5,13 +5,38 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Trash2, CheckSquare } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PixelBorder from "@/components/PixelBorder";
+import AdminLogin from "@/components/AdminLogin";
 import type { Appointment } from "@shared/schema";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Admin() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  
+  // Check if the user is already authenticated (from localStorage)
+  useEffect(() => {
+    const authStatus = localStorage.getItem('barber_admin_auth');
+    if (authStatus === 'authenticated') {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
+  // Handle login
+  const handleLogin = (status: boolean) => {
+    setIsAuthenticated(status);
+    if (status) {
+      localStorage.setItem('barber_admin_auth', 'authenticated');
+    }
+  };
+
+  // If not authenticated, show login form
+  if (!isAuthenticated) {
+    return <AdminLogin onLogin={handleLogin} />;
+  }
+  
+  // Admin dashboard (only shown when authenticated)
   const [activeTab, setActiveTab] = useState<'upcoming' | 'past'>('upcoming');
   const today = new Date().toISOString().split('T')[0];
   const { toast } = useToast();
@@ -90,7 +115,22 @@ export default function Admin() {
     <div className="container mx-auto px-4 py-8">
       <PixelBorder withCorners>
         <div className="p-6">
-          <h1 className="text-3xl font-bold mb-6 text-center text-primary">ADMIN DASHBOARD</h1>
+          <div className="flex items-center justify-between mb-6">
+            <h1 className="text-3xl font-bold text-primary">ADMIN DASHBOARD</h1>
+            <Button 
+              variant="outline" 
+              onClick={() => {
+                localStorage.removeItem('barber_admin_auth');
+                setIsAuthenticated(false);
+                toast({
+                  title: "Logged out",
+                  description: "You have been logged out successfully."
+                });
+              }}
+            >
+              Logout
+            </Button>
+          </div>
           
           <div className="flex justify-center gap-4 mb-6">
             <Button 
