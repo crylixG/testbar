@@ -1,20 +1,68 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { formatDateForInput, formatTimeDisplay } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Trash2, CheckSquare } from "lucide-react";
 import { useState } from "react";
 import PixelBorder from "@/components/PixelBorder";
 import type { Appointment } from "@shared/schema";
+import { apiRequest, queryClient } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Admin() {
   const [activeTab, setActiveTab] = useState<'upcoming' | 'past'>('upcoming');
   const today = new Date().toISOString().split('T')[0];
+  const { toast } = useToast();
   
   const { data: appointments = [], isLoading } = useQuery<Appointment[]>({
     queryKey: ['/api/admin/appointments'],
     refetchInterval: 10000, // Refetch every 10 seconds to keep the admin view up to date
+  });
+  
+  // Delete appointment mutation
+  const deleteAppointmentMutation = useMutation({
+    mutationFn: async (id: number) => {
+      await apiRequest('DELETE', `/api/admin/appointments/${id}`);
+    },
+    onSuccess: () => {
+      toast({
+        title: "Appointment deleted",
+        description: "The appointment has been successfully deleted.",
+      });
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/appointments'] });
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: "Failed to delete appointment. Please try again.",
+        variant: "destructive",
+      });
+      console.error("Failed to delete appointment:", error);
+    }
+  });
+  
+  // Mark appointment as completed mutation
+  const markCompletedMutation = useMutation({
+    mutationFn: async (id: number) => {
+      await apiRequest('PATCH', `/api/admin/appointments/${id}/complete`);
+    },
+    onSuccess: () => {
+      toast({
+        title: "Appointment updated",
+        description: "The appointment has been marked as completed.",
+      });
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/appointments'] });
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: "Failed to update appointment. Please try again.",
+        variant: "destructive",
+      });
+      console.error("Failed to update appointment:", error);
+    }
   });
   
   // Filter appointments based on the active tab
@@ -81,6 +129,7 @@ export default function Admin() {
                     <TableHead>Contact</TableHead>
                     <TableHead>Notes</TableHead>
                     <TableHead>Status</TableHead>
+                    <TableHead>Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -102,9 +151,39 @@ export default function Admin() {
                           {appointment.notes || '-'}
                         </TableCell>
                         <TableCell>
-                          <Badge variant={isPast ? "outline" : "default"}>
-                            {isPast ? 'Completed' : 'Scheduled'}
+                          <Badge variant={appointment.completed ? "outline" : isPast ? "secondary" : "default"}>
+                            {appointment.completed ? 'Completed' : isPast ? 'Past' : 'Scheduled'}
                           </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex space-x-2">
+                            {!appointment.completed && (
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => markCompletedMutation.mutate(appointment.id)}
+                                disabled={markCompletedMutation.isPending}
+                                className="text-green-600 hover:text-green-700 hover:bg-green-50"
+                              >
+                                <CheckSquare className="h-4 w-4 mr-1" />
+                                <span className="sr-only md:not-sr-only md:inline-block">Complete</span>
+                              </Button>
+                            )}
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => {
+                                if (confirm('Are you sure you want to delete this appointment?')) {
+                                  deleteAppointmentMutation.mutate(appointment.id);
+                                }
+                              }}
+                              disabled={deleteAppointmentMutation.isPending}
+                              className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                            >
+                              <Trash2 className="h-4 w-4 mr-1" />
+                              <span className="sr-only md:not-sr-only md:inline-block">Delete</span>
+                            </Button>
+                          </div>
                         </TableCell>
                       </TableRow>
                     );

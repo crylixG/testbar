@@ -31,6 +31,7 @@ export interface IStorage {
   getAppointmentById(id: number): Promise<Appointment | undefined>;
   getAppointmentsByDate(date: string): Promise<Appointment[]>;
   deleteAppointment(id: number): Promise<boolean>;
+  updateAppointmentStatus(id: number, completed: boolean): Promise<Appointment>;
   
   // Testimonial methods
   createTestimonial(testimonial: InsertTestimonial): Promise<Testimonial>;
@@ -106,6 +107,20 @@ export class DatabaseStorage implements IStorage {
   async deleteAppointment(id: number): Promise<boolean> {
     const result = await db.delete(appointments).where(eq(appointments.id, id));
     return result.rowCount !== null && result.rowCount > 0;
+  }
+  
+  async updateAppointmentStatus(id: number, completed: boolean): Promise<Appointment> {
+    const [updatedAppointment] = await db
+      .update(appointments)
+      .set({ completed })
+      .where(eq(appointments.id, id))
+      .returning();
+    
+    if (!updatedAppointment) {
+      throw new Error(`Appointment with ID ${id} not found`);
+    }
+    
+    return updatedAppointment;
   }
   
   // Testimonial methods

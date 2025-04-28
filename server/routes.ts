@@ -72,6 +72,54 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // Delete appointment (admin route)
+  app.delete("/api/admin/appointments/:id", async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const appointmentId = parseInt(id);
+      
+      if (isNaN(appointmentId)) {
+        return res.status(400).json({ message: "Invalid appointment ID" });
+      }
+      
+      const success = await storage.deleteAppointment(appointmentId);
+      
+      if (success) {
+        res.status(200).json({ message: "Appointment deleted successfully" });
+      } else {
+        res.status(404).json({ message: "Appointment not found" });
+      }
+    } catch (error) {
+      console.error("Error deleting appointment:", error);
+      res.status(500).json({ message: "Failed to delete appointment" });
+    }
+  });
+  
+  // Update appointment status (admin route)
+  app.patch("/api/admin/appointments/:id/complete", async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const appointmentId = parseInt(id);
+      
+      if (isNaN(appointmentId)) {
+        return res.status(400).json({ message: "Invalid appointment ID" });
+      }
+      
+      const appointment = await storage.getAppointmentById(appointmentId);
+      
+      if (!appointment) {
+        return res.status(404).json({ message: "Appointment not found" });
+      }
+      
+      const updatedAppointment = await storage.updateAppointmentStatus(appointmentId, true);
+      
+      res.status(200).json(updatedAppointment);
+    } catch (error) {
+      console.error("Error updating appointment status:", error);
+      res.status(500).json({ message: "Failed to update appointment status" });
+    }
+  });
+  
   // Get testimonials
   app.get("/api/testimonials", async (_req: Request, res: Response) => {
     try {

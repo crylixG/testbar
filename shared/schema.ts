@@ -26,6 +26,7 @@ export const appointments = pgTable("appointments", {
   date: text("date").notNull(),
   time: text("time").notNull(),
   notes: text("notes"),
+  completed: boolean("completed").default(false).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
