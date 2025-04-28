@@ -4,12 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Trash2, CheckSquare, Home } from "lucide-react";
+import { Trash2, CheckSquare, Home, Mail } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import PixelBorder from "@/components/PixelBorder";
 import AdminLogin from "@/components/AdminLogin";
-import type { Appointment } from "@shared/schema";
+import type { Appointment, ContactMessage } from "@shared/schema";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
@@ -23,10 +23,17 @@ export default function Admin() {
   
   // Data fetching hook - this will run regardless of authentication state
   // but will only be used when authenticated
-  const { data: appointments = [], isLoading } = useQuery<Appointment[]>({
+  const { data: appointments = [], isLoading: appointmentsLoading } = useQuery<Appointment[]>({
     queryKey: ['/api/admin/appointments'],
     refetchInterval: 10000, // Refetch every 10 seconds to keep the admin view up to date
-    enabled: isAuthenticated, // Only run the query when authenticated
+    enabled: isAuthenticated && (activeTab === 'upcoming' || activeTab === 'past'), // Only run the query when authenticated and needed
+  });
+  
+  // Query for contact messages
+  const { data: contactMessages = [], isLoading: contactMessagesLoading } = useQuery<ContactMessage[]>({
+    queryKey: ['/api/admin/contact-messages'],
+    refetchInterval: 10000, // Refetch every 10 seconds
+    enabled: isAuthenticated && activeTab === 'contact', // Only run when on contact tab
   });
   
   // Delete appointment mutation
@@ -73,6 +80,28 @@ export default function Admin() {
         variant: "destructive",
       });
       console.error("Failed to update appointment:", error);
+    }
+  });
+  
+  // Delete contact message mutation
+  const deleteContactMessageMutation = useMutation({
+    mutationFn: async (id: number) => {
+      await apiRequest('DELETE', `/api/admin/contact-messages/${id}`);
+    },
+    onSuccess: () => {
+      toast({
+        title: "Message deleted",
+        description: "The contact message has been successfully deleted.",
+      });
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/contact-messages'] });
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: "Failed to delete contact message. Please try again.",
+        variant: "destructive",
+      });
+      console.error("Failed to delete contact message:", error);
     }
   });
   
@@ -141,7 +170,7 @@ export default function Admin() {
             </Button>
           </div>
           
-          <div className="flex justify-center gap-4 mb-6">
+          <div className="flex flex-wrap justify-center gap-4 mb-6">
             <Button 
               variant={activeTab === 'upcoming' ? 'default' : 'outline'} 
               onClick={() => setActiveTab('upcoming')}
@@ -153,6 +182,14 @@ export default function Admin() {
               onClick={() => setActiveTab('past')}
             >
               Past Appointments
+            </Button>
+            <Button 
+              variant={activeTab === 'contact' ? 'default' : 'outline'} 
+              onClick={() => setActiveTab('contact')}
+              className="flex items-center gap-2"
+            >
+              <Mail className="h-4 w-4" />
+              Contact Messages
             </Button>
           </div>
           
@@ -167,13 +204,72 @@ export default function Admin() {
             </Button>
           </div>
           
-          {isLoading ? (
+          {activeTab === 'contact' ? (
+            /* Contact Messages Tab */
+            contactMessagesLoading ? (
+              <div className="space-y-2">
+                {[...Array(5)].map((_, i) => (
+                  <Skeleton key={i} className="w-full h-16" />
+                ))}
+              </div>
+            ) : contactMessages.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-xl">No contact messages found.</p>
+              </div>
+            ) : (
+              <div className="overflow-x-auto rounded-lg">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Date</TableHead>
+                      <TableHead>Name</TableHead>
+                      <TableHead>Email</TableHead>
+                      <TableHead>Phone</TableHead>
+                      <TableHead>Message</TableHead>
+                      <TableHead>Actions</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {contactMessages.map((message) => (
+                      <TableRow key={message.id}>
+                        <TableCell className="font-medium">
+                          {new Date(message.createdAt).toLocaleDateString()}
+                        </TableCell>
+                        <TableCell>{message.name}</TableCell>
+                        <TableCell>{message.email}</TableCell>
+                        <TableCell>{message.phone}</TableCell>
+                        <TableCell className="max-w-[300px]">
+                          <div className="line-clamp-3">{message.message}</div>
+                        </TableCell>
+                        <TableCell>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              if (confirm('Are you sure you want to delete this message?')) {
+                                deleteContactMessageMutation.mutate(message.id);
+                              }
+                            }}
+                            disabled={deleteContactMessageMutation.isPending}
+                            className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                          >
+                            <Trash2 className="h-4 w-4 mr-1" />
+                            <span className="sr-only md:not-sr-only md:inline-block">Delete</span>
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            )
+          ) : appointmentsLoading ? (
             <div className="space-y-2">
               {[...Array(5)].map((_, i) => (
                 <Skeleton key={i} className="w-full h-16" />
               ))}
             </div>
-          ) : filteredAppointments?.length === 0 ? (
+          ) : filteredAppointments?.length === 0 && (activeTab === 'upcoming' || activeTab === 'past') ? (
             <div className="text-center py-12">
               <p className="text-xl">No {activeTab} appointments found.</p>
             </div>
