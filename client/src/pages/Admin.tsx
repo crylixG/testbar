@@ -14,6 +14,9 @@ import { useToast } from "@/hooks/use-toast";
 
 export default function Admin() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [activeTab, setActiveTab] = useState<'upcoming' | 'past'>('upcoming');
+  const today = new Date().toISOString().split('T')[0];
+  const { toast } = useToast();
   
   // Check if the user is already authenticated (from localStorage)
   useEffect(() => {
@@ -35,11 +38,6 @@ export default function Admin() {
   if (!isAuthenticated) {
     return <AdminLogin onLogin={handleLogin} />;
   }
-  
-  // Admin dashboard (only shown when authenticated)
-  const [activeTab, setActiveTab] = useState<'upcoming' | 'past'>('upcoming');
-  const today = new Date().toISOString().split('T')[0];
-  const { toast } = useToast();
   
   const { data: appointments = [], isLoading } = useQuery<Appointment[]>({
     queryKey: ['/api/admin/appointments'],
