@@ -74,10 +74,10 @@ export default function Header() {
       ref={headerRef}
       className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-background shadow-md' : 'bg-transparent'}`}
     >
-      <nav className="container mx-auto px-4 py-3 md:py-4 flex justify-between items-center">
-        <div className="flex items-center">
+      <nav className="container mx-auto px-2 py-2 md:px-4 md:py-4 flex justify-between items-center">
+        <div className="flex items-center max-w-[65%]">
           <PixelBorder className="p-1 sm:p-2 mr-2 sm:mr-3">
-            <h1 className="font-pixel text-primary text-sm sm:text-lg md:text-xl">8-BIT BARBERS</h1>
+            <h1 className="font-pixel text-primary text-xs sm:text-sm md:text-lg truncate">8-BIT BARBERS</h1>
           </PixelBorder>
         </div>
         
@@ -95,16 +95,22 @@ export default function Header() {
           </a>
         </div>
         
-        <div className="md:hidden">
+        <div className="flex items-center md:hidden">
+          <a 
+            href="#booking" 
+            className="mr-2 px-2 py-1 text-xs bg-primary hover:bg-opacity-80 transition-colors duration-200 font-pixel"
+          >
+            BOOK
+          </a>
           <button 
             onClick={(e) => {
               e.stopPropagation();
               setMobileMenuOpen(!mobileMenuOpen);
             }} 
-            className="text-primary text-xl sm:text-2xl p-1"
+            className="text-primary p-1"
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
           >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </nav>
