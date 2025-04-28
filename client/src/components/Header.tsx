@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "wouter";
 import { Menu, X } from "lucide-react";
 import PixelBorder from "./PixelBorder";
@@ -6,6 +6,8 @@ import PixelBorder from "./PixelBorder";
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [headerHeight, setHeaderHeight] = useState(56);
+  const headerRef = useRef<HTMLDivElement>(null);
   
   // Handle scroll effects
   useEffect(() => {
@@ -22,6 +24,23 @@ export default function Header() {
     setMobileMenuOpen(false);
   };
   
+  // Get header height for mobile menu positioning
+  useEffect(() => {
+    if (headerRef.current) {
+      const height = headerRef.current.offsetHeight;
+      setHeaderHeight(height);
+    }
+    
+    const updateHeaderHeight = () => {
+      if (headerRef.current) {
+        setHeaderHeight(headerRef.current.offsetHeight);
+      }
+    };
+    
+    window.addEventListener('resize', updateHeaderHeight);
+    return () => window.removeEventListener('resize', updateHeaderHeight);
+  }, []);
+  
   // Close mobile menu when clicking outside
   useEffect(() => {
     if (mobileMenuOpen) {
@@ -37,8 +56,24 @@ export default function Header() {
     }
   }, [mobileMenuOpen]);
   
+  // Prevent scrolling when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+  
   return (
-    <header className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-background shadow-md' : 'bg-transparent'}`}>
+    <header 
+      ref={headerRef}
+      className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-background shadow-md' : 'bg-transparent'}`}
+    >
       <nav className="container mx-auto px-4 py-3 md:py-4 flex justify-between items-center">
         <div className="flex items-center">
           <PixelBorder className="p-1 sm:p-2 mr-2 sm:mr-3">
@@ -66,7 +101,7 @@ export default function Header() {
               e.stopPropagation();
               setMobileMenuOpen(!mobileMenuOpen);
             }} 
-            className="text-primary text-xl sm:text-2xl"
+            className="text-primary text-xl sm:text-2xl p-1"
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
           >
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -76,9 +111,10 @@ export default function Header() {
       
       {/* Mobile Menu */}
       <div 
-        className={`mobile-menu md:hidden fixed top-[56px] left-0 w-full bg-background bg-opacity-95 z-20 shadow-lg transform transition-transform duration-300 ease-in-out ${
+        className={`mobile-menu md:hidden fixed left-0 w-full bg-background bg-opacity-95 z-20 shadow-lg transform transition-transform duration-300 ease-in-out ${
           mobileMenuOpen ? 'translate-y-0' : '-translate-y-full'
         }`}
+        style={{ top: `${headerHeight}px` }}
       >
         <div className="container mx-auto px-4 py-3 flex flex-col">
           <a 
@@ -131,6 +167,7 @@ export default function Header() {
         <div 
           className="fixed inset-0 bg-black bg-opacity-30 z-10 md:hidden" 
           onClick={() => setMobileMenuOpen(false)}
+          style={{ top: `${headerHeight}px` }}
         />
       )}
     </header>
