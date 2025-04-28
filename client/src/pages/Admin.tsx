@@ -60,6 +60,9 @@ export default function Admin() {
         description: "The appointment has been marked as completed.",
       });
       queryClient.invalidateQueries({ queryKey: ['/api/admin/appointments'] });
+      
+      // Automatically switch to past appointments tab when marking as completed
+      setActiveTab('past');
     },
     onError: (error) => {
       toast({
@@ -98,9 +101,11 @@ export default function Admin() {
     const currentDate = new Date();
     
     if (activeTab === 'upcoming') {
-      return appointmentDate >= currentDate;
+      // Show appointments that are not completed and are in the future
+      return !appointment.completed && appointmentDate >= currentDate;
     } else {
-      return appointmentDate < currentDate;
+      // Show appointments that are either completed or in the past
+      return appointment.completed || appointmentDate < currentDate;
     }
   }).sort((a: Appointment, b: Appointment) => {
     const dateA = new Date(`${a.date}T${a.time}`);
