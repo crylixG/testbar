@@ -9,12 +9,17 @@ import {
   Service
 } from '@shared/schema';
 
-// Define the storage directory
-const DATA_DIR = path.join(process.cwd(), 'data');
+// Define the storage directory - using a path that works in both development and production
+// In Heroku, use the tmp directory for data storage since the filesystem is ephemeral
+const isDev = process.env.NODE_ENV === 'development';
+const DATA_DIR = isDev 
+  ? path.join(process.cwd(), 'data')
+  : path.join(process.env.HOME || '/tmp', 'barber_shop_data');
 
 // Ensure data directory exists
 if (!fs.existsSync(DATA_DIR)) {
   fs.mkdirSync(DATA_DIR, { recursive: true });
+  console.log(`Created data directory at ${DATA_DIR}`);
 }
 
 // File paths for each data type
