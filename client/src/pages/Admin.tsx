@@ -16,7 +16,7 @@ import { useToast } from "@/hooks/use-toast";
 export default function Admin() {
   // Set up all hooks at the top level
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [activeTab, setActiveTab] = useState<'upcoming' | 'past'>('upcoming');
+  const [activeTab, setActiveTab] = useState<'upcoming' | 'past' | 'contact'>('upcoming');
   const today = new Date().toISOString().split('T')[0];
   const { toast } = useToast();
   const [_, navigate] = useLocation();

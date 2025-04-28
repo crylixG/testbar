@@ -162,6 +162,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ message: "Failed to create contact message" });
     }
   });
+  
+  // Get all contact messages (admin route)
+  app.get("/api/admin/contact-messages", async (_req: Request, res: Response) => {
+    try {
+      const contactMessages = await storage.getContactMessages();
+      res.json(contactMessages);
+    } catch (error) {
+      console.error("Error fetching contact messages:", error);
+      res.status(500).json({ message: "Failed to fetch contact messages" });
+    }
+  });
+  
+  // Delete contact message (admin route)
+  app.delete("/api/admin/contact-messages/:id", async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const messageId = parseInt(id);
+      
+      if (isNaN(messageId)) {
+        return res.status(400).json({ message: "Invalid message ID" });
+      }
+      
+      const success = await storage.deleteContactMessage(messageId);
+      
+      if (success) {
+        res.status(200).json({ message: "Contact message deleted successfully" });
+      } else {
+        res.status(404).json({ message: "Contact message not found" });
+      }
+    } catch (error) {
+      console.error("Error deleting contact message:", error);
+      res.status(500).json({ message: "Failed to delete contact message" });
+    }
+  });
 
   const httpServer = createServer(app);
   return httpServer;
