@@ -1,0 +1,102 @@
+PS C:\Users\User\Downloads\BarberSpotlight-1> heroku logs --tail
+ »   Warning: heroku update available from 10.0.0 to 10.6.1.
+2025-04-28T09:44:18.004679+00:00 app[api]: Release v3 created by user debmalyabiswas011@gmail.com
+2025-04-28T09:44:18.004679+00:00 app[api]: Set NODE_ENV config vars by user debmalyabiswas011@gmail.com
+2025-04-28T09:45:45.000000+00:00 app[api]: Build started by user debmalyabiswas011@gmail.com
+2025-04-28T09:46:17.978633+00:00 app[api]: Deploy 9f36262b by user debmalyabiswas011@gmail.com
+2025-04-28T09:46:17.978633+00:00 app[api]: Release v4 created by user debmalyabiswas011@gmail.com
+2025-04-28T09:46:17.990304+00:00 app[api]: Scaled to web@1:Basic by user debmalyabiswas011@gmail.com
+2025-04-28T09:46:22.000000+00:00 app[api]: Build succeeded
+2025-04-28T09:46:23.220331+00:00 heroku[web.1]: Starting process with command `node server.js`
+2025-04-28T09:46:23.776626+00:00 app[web.1]: node:internal/modules/esm/resolve:275
+2025-04-28T09:46:23.776678+00:00 app[web.1]: throw new ERR_MODULE_NOT_FOUND(
+2025-04-28T09:46:23.776681+00:00 app[web.1]: ^
+2025-04-28T09:46:23.776682+00:00 app[web.1]:
+2025-04-28T09:46:23.776684+00:00 app[web.1]: Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/app/dist/file-storage.js' imported from /app/server.js
+2025-04-28T09:46:23.776686+00:00 app[web.1]: at finalizeResolution (node:internal/modules/esm/resolve:275:11)
+2025-04-28T09:46:23.776688+00:00 app[web.1]: at moduleResolve (node:internal/modules/esm/resolve:860:10)
+2025-04-28T09:46:23.776688+00:00 app[web.1]: at defaultResolve (node:internal/modules/esm/resolve:984:11)
+2025-04-28T09:46:23.776689+00:00 app[web.1]: at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:780:12)
+2025-04-28T09:46:23.776689+00:00 app[web.1]: at #cachedDefaultResolve (node:internal/modules/esm/loader:704:25)
+2025-04-28T09:46:23.776689+00:00 app[web.1]: at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
+2025-04-28T09:46:23.776691+00:00 app[web.1]: at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
+2025-04-28T09:46:23.776691+00:00 app[web.1]: at ModuleJob._link (node:internal/modules/esm/module_job:137:49) {
+2025-04-28T09:46:23.776693+00:00 app[web.1]: code: 'ERR_MODULE_NOT_FOUND',
+2025-04-28T09:46:23.776693+00:00 app[web.1]: url: 'file:///app/dist/file-storage.js'
+2025-04-28T09:46:23.776693+00:00 app[web.1]: }
+2025-04-28T09:46:23.776694+00:00 app[web.1]:
+2025-04-28T09:46:23.776696+00:00 app[web.1]: Node.js v22.15.0
+2025-04-28T09:46:23.828714+00:00 heroku[web.1]: Process exited with status 1
+2025-04-28T09:46:23.849571+00:00 heroku[web.1]: State changed from starting to crashed
+2025-04-28T09:46:23.852694+00:00 heroku[web.1]: State changed from crashed to starting
+2025-04-28T09:46:29.332312+00:00 heroku[web.1]: Starting process with command `node server.js`
+2025-04-28T09:46:29.955992+00:00 app[web.1]: node:internal/modules/esm/resolve:275
+2025-04-28T09:46:29.956018+00:00 app[web.1]: throw new ERR_MODULE_NOT_FOUND(
+2025-04-28T09:46:29.956019+00:00 app[web.1]: ^
+2025-04-28T09:46:29.956019+00:00 app[web.1]:
+2025-04-28T09:46:29.956020+00:00 app[web.1]: Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/app/dist/file-storage.js' imported from /app/server.js
+2025-04-28T09:46:29.956020+00:00 app[web.1]: at finalizeResolution (node:internal/modules/esm/resolve:275:11)
+2025-04-28T09:46:29.956021+00:00 app[web.1]: at moduleResolve (node:internal/modules/esm/resolve:860:10)
+2025-04-28T09:46:29.956021+00:00 app[web.1]: at defaultResolve (node:internal/modules/esm/resolve:984:11)
+2025-04-28T09:46:29.956022+00:00 app[web.1]: at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:780:12)
+2025-04-28T09:46:29.956022+00:00 app[web.1]: at #cachedDefaultResolve (node:internal/modules/esm/loader:704:25)
+2025-04-28T09:46:29.956022+00:00 app[web.1]: at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
+2025-04-28T09:46:29.956023+00:00 app[web.1]: at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
+2025-04-28T09:46:29.956023+00:00 app[web.1]: at ModuleJob._link (node:internal/modules/esm/module_job:137:49) {
+2025-04-28T09:46:29.956024+00:00 app[web.1]: code: 'ERR_MODULE_NOT_FOUND',
+2025-04-28T09:46:29.956024+00:00 app[web.1]: url: 'file:///app/dist/file-storage.js'
+2025-04-28T09:46:29.956025+00:00 app[web.1]: }
+2025-04-28T09:46:29.956025+00:00 app[web.1]:
+2025-04-28T09:46:29.956025+00:00 app[web.1]: Node.js v22.15.0
+2025-04-28T09:46:30.000173+00:00 heroku[web.1]: Process exited with status 1
+2025-04-28T09:46:30.032025+00:00 heroku[web.1]: State changed from starting to crashed
+2025-04-28T09:46:59.048984+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=testybar-dbeb80345859.herokuapp.com request_id=fd7ea468-49dd-48a5-abbc-5a932994c349 fwd="152.56.136.196" dyno= connect= service= status=503 bytes= protocol=https
+2025-04-28T09:47:00.994213+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/favicon.ico" host=testybar-dbeb80345859.herokuapp.com request_id=12ba65fd-566a-412e-9f2d-ad24e555d770 fwd="152.56.136.196" dyno= connect= service= status=503 bytes= protocol=https
+2025-04-28T09:48:14.053139+00:00 app[api]: Release v5 created by user debmalyabiswas011@gmail.com
+2025-04-28T09:48:14.053139+00:00 app[api]: Set NPM_CONFIG_PRODUCTION config vars by user debmalyabiswas011@gmail.com
+2025-04-28T09:48:14.272236+00:00 heroku[web.1]: State changed from crashed to starting
+2025-04-28T09:48:19.572943+00:00 heroku[web.1]: Starting process with command `node server.js`
+2025-04-28T09:48:20.118395+00:00 app[web.1]: node:internal/modules/esm/resolve:275
+2025-04-28T09:48:20.118428+00:00 app[web.1]: throw new ERR_MODULE_NOT_FOUND(
+2025-04-28T09:48:20.118428+00:00 app[web.1]: ^
+2025-04-28T09:48:20.118429+00:00 app[web.1]:
+2025-04-28T09:48:20.118429+00:00 app[web.1]: Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/app/dist/file-storage.js' imported from /app/server.js
+2025-04-28T09:48:20.118430+00:00 app[web.1]: at finalizeResolution (node:internal/modules/esm/resolve:275:11)
+2025-04-28T09:48:20.118430+00:00 app[web.1]: at moduleResolve (node:internal/modules/esm/resolve:860:10)
+2025-04-28T09:48:20.118430+00:00 app[web.1]: at defaultResolve (node:internal/modules/esm/resolve:984:11)
+2025-04-28T09:48:20.118431+00:00 app[web.1]: at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:780:12)
+2025-04-28T09:48:20.118431+00:00 app[web.1]: at #cachedDefaultResolve (node:internal/modules/esm/loader:704:25)
+2025-04-28T09:48:20.118431+00:00 app[web.1]: at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
+2025-04-28T09:48:20.118432+00:00 app[web.1]: at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
+2025-04-28T09:48:20.118432+00:00 app[web.1]: at ModuleJob._link (node:internal/modules/esm/module_job:137:49) {
+2025-04-28T09:48:20.118432+00:00 app[web.1]: code: 'ERR_MODULE_NOT_FOUND',
+2025-04-28T09:48:20.118433+00:00 app[web.1]: url: 'file:///app/dist/file-storage.js'
+2025-04-28T09:48:20.118433+00:00 app[web.1]: }
+2025-04-28T09:48:20.118433+00:00 app[web.1]:
+2025-04-28T09:48:20.118433+00:00 app[web.1]: Node.js v22.15.0
+2025-04-28T09:48:20.163809+00:00 heroku[web.1]: Process exited with status 1
+2025-04-28T09:48:20.189934+00:00 heroku[web.1]: State changed from starting to crashed
+2025-04-28T09:48:26.503399+00:00 heroku[web.1]: State changed from crashed to starting
+2025-04-28T09:48:32.079065+00:00 heroku[web.1]: Starting process with command `node server.js`
+2025-04-28T09:48:32.785094+00:00 app[web.1]: node:internal/modules/esm/resolve:275
+2025-04-28T09:48:32.785137+00:00 app[web.1]: throw new ERR_MODULE_NOT_FOUND(
+2025-04-28T09:48:32.785140+00:00 app[web.1]: ^
+2025-04-28T09:48:32.785140+00:00 app[web.1]:
+2025-04-28T09:48:32.785143+00:00 app[web.1]: Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/app/dist/file-storage.js' imported from /app/server.js
+2025-04-28T09:48:32.785145+00:00 app[web.1]: at finalizeResolution (node:internal/modules/esm/resolve:275:11)
+2025-04-28T09:48:32.785147+00:00 app[web.1]: at moduleResolve (node:internal/modules/esm/resolve:860:10)
+2025-04-28T09:48:32.785148+00:00 app[web.1]: at defaultResolve (node:internal/modules/esm/resolve:984:11)
+2025-04-28T09:48:32.785148+00:00 app[web.1]: at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:780:12)
+2025-04-28T09:48:32.785148+00:00 app[web.1]: at #cachedDefaultResolve (node:internal/modules/esm/loader:704:25)
+2025-04-28T09:48:32.785148+00:00 app[web.1]: at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
+2025-04-28T09:48:32.785151+00:00 app[web.1]: at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
+2025-04-28T09:48:32.785151+00:00 app[web.1]: at ModuleJob._link (node:internal/modules/esm/module_job:137:49) {
+2025-04-28T09:48:32.785153+00:00 app[web.1]: code: 'ERR_MODULE_NOT_FOUND',
+2025-04-28T09:48:32.785154+00:00 app[web.1]: url: 'file:///app/dist/file-storage.js'
+2025-04-28T09:48:32.785154+00:00 app[web.1]: }
+2025-04-28T09:48:32.785154+00:00 app[web.1]:
+2025-04-28T09:48:32.785156+00:00 app[web.1]: Node.js v22.15.0
+2025-04-28T09:48:32.837586+00:00 heroku[web.1]: Process exited with status 1
+2025-04-28T09:48:32.865335+00:00 heroku[web.1]: State changed from starting to crashed
+2025-04-28T09:48:42.124255+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=testybar-dbeb80345859.herokuapp.com request_id=aa0d8298-2a31-47b2-bb2d-ec23e2a51e33 fwd="152.56.136.196" dyno= connect= service= status=503 bytes= protocol=https
+2025-04-28T09:48:42.639399+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/favicon.ico" host=testybar-dbeb80345859.herokuapp.com request_id=5eb574ac-2386-40ad-8e7c-e34ed16387a4 fwd="152.56.136.196" dyno= connect= service= status=503 bytes= protocol=https
