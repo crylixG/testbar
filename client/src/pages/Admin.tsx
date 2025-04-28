@@ -13,35 +13,18 @@ import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Admin() {
+  // Set up all hooks at the top level
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeTab, setActiveTab] = useState<'upcoming' | 'past'>('upcoming');
   const today = new Date().toISOString().split('T')[0];
   const { toast } = useToast();
   
-  // Check if the user is already authenticated (from localStorage)
-  useEffect(() => {
-    const authStatus = localStorage.getItem('barber_admin_auth');
-    if (authStatus === 'authenticated') {
-      setIsAuthenticated(true);
-    }
-  }, []);
-
-  // Handle login
-  const handleLogin = (status: boolean) => {
-    setIsAuthenticated(status);
-    if (status) {
-      localStorage.setItem('barber_admin_auth', 'authenticated');
-    }
-  };
-
-  // If not authenticated, show login form
-  if (!isAuthenticated) {
-    return <AdminLogin onLogin={handleLogin} />;
-  }
-  
+  // Data fetching hook - this will run regardless of authentication state
+  // but will only be used when authenticated
   const { data: appointments = [], isLoading } = useQuery<Appointment[]>({
     queryKey: ['/api/admin/appointments'],
     refetchInterval: 10000, // Refetch every 10 seconds to keep the admin view up to date
+    enabled: isAuthenticated, // Only run the query when authenticated
   });
   
   // Delete appointment mutation
@@ -87,6 +70,27 @@ export default function Admin() {
       console.error("Failed to update appointment:", error);
     }
   });
+  
+  // Check if the user is already authenticated (from localStorage)
+  useEffect(() => {
+    const authStatus = localStorage.getItem('barber_admin_auth');
+    if (authStatus === 'authenticated') {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
+  // Handle login
+  const handleLogin = (status: boolean) => {
+    setIsAuthenticated(status);
+    if (status) {
+      localStorage.setItem('barber_admin_auth', 'authenticated');
+    }
+  };
+
+  // If not authenticated, show login form
+  if (!isAuthenticated) {
+    return <AdminLogin onLogin={handleLogin} />;
+  }
   
   // Filter appointments based on the active tab
   const filteredAppointments = appointments.filter((appointment: Appointment) => {
