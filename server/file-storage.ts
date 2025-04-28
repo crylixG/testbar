@@ -38,22 +38,55 @@ Object.values(FILES).forEach(file => {
   }
 });
 
-// Helper functions for reading/writing JSON files
+// Helper functions for reading/writing JSON files with better error handling for Heroku's ephemeral filesystem
 function readJsonFile<T>(filePath: string): T {
   try {
+    if (!fs.existsSync(filePath)) {
+      console.log(`File ${filePath} does not exist, creating empty file`);
+      fs.writeFileSync(filePath, JSON.stringify([], null, 2));
+      return [] as unknown as T;
+    }
+    
     const data = fs.readFileSync(filePath, 'utf8');
-    return JSON.parse(data) as T;
+    try {
+      return JSON.parse(data) as T;
+    } catch (parseError) {
+      console.error(`Error parsing JSON from ${filePath}:`, parseError);
+      // If the file exists but is corrupted, create a new one
+      fs.writeFileSync(filePath, JSON.stringify([], null, 2));
+      return [] as unknown as T;
+    }
   } catch (error) {
     console.error(`Error reading file ${filePath}:`, error);
+    // Create the parent directory if it doesn't exist
+    const dir = path.dirname(filePath);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+      console.log(`Created directory ${dir}`);
+    }
+    
+    fs.writeFileSync(filePath, JSON.stringify([], null, 2));
+    console.log(`Created empty file at ${filePath}`);
     return [] as unknown as T;
   }
 }
 
 function writeJsonFile<T>(filePath: string, data: T): void {
   try {
+    // Ensure the directory exists
+    const dir = path.dirname(filePath);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+      console.log(`Created directory ${dir}`);
+    }
+    
     fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
   } catch (error) {
     console.error(`Error writing file ${filePath}:`, error);
+    // Try to determine what went wrong
+    if (error instanceof Error) {
+      console.error(`Error details: ${error.message}`);
+    }
   }
 }
 

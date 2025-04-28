@@ -1,0 +1,9 @@
+{
+  "name": "Barber Shop App",
+  "description": "A modern pixelated-theme barber shop management platform",
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}

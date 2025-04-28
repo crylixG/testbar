@@ -40,7 +40,13 @@ heroku git:remote -a your-barber-shop-name
 
 Replace `your-barber-shop-name` with the name you chose in step 2.
 
-5. **Push your code to Heroku**
+5. **Set environment variables for production**
+
+```bash
+heroku config:set NODE_ENV=production
+```
+
+6. **Push your code to Heroku**
 
 ```bash
 git push heroku main
@@ -52,11 +58,42 @@ If your branch is named `master` instead of `main`, use:
 git push heroku master
 ```
 
-6. **Open your deployed application**
+7. **Ensure that at least one web dyno is running**
+
+```bash
+heroku ps:scale web=1
+```
+
+8. **Open your deployed application**
 
 ```bash
 heroku open
 ```
+
+## Common Deployment Issues
+
+If you encounter an "Application Error" when visiting your Heroku site, try these steps:
+
+1. **Check the logs for errors**:
+```bash
+heroku logs --tail
+```
+
+2. **Make sure the build completed successfully**:
+```bash
+heroku builds:last
+```
+
+3. **Try restarting the dyno**:
+```bash
+heroku restart
+```
+
+4. **Verify your Procfile is correctly formatted**:
+The Procfile should contain exactly: `web: npm start` (with no extra spaces)
+
+5. **Check that the Node.js version is compatible**:
+Heroku currently supports Node.js 20.x by default
 
 ## Important Notes
 
@@ -71,15 +108,8 @@ heroku open
   - Username: `deep`
   - Password: `deep8670`
 
-## Troubleshooting
-
-If you encounter any issues, you can view the logs with:
-
-```bash
-heroku logs --tail
-```
-
 ## Additional Resources
 
 - [Heroku Node.js Support](https://devcenter.heroku.com/articles/nodejs-support)
+- [Troubleshooting Node.js Deployments](https://devcenter.heroku.com/articles/troubleshooting-node-deploys)
 - [Heroku DevCenter](https://devcenter.heroku.com/)
